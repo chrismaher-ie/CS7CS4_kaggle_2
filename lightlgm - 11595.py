@@ -115,7 +115,9 @@ income_test.drop(['test'], axis=1, inplace=True)
 
 ##### Light GMB
 X = income_train.loc[:, income_train.columns !='Total Yearly Income [EUR]']
-Y = np.sqrt(income_train.loc[:, 'Total Yearly Income [EUR]'])
+#Y = np.sqrt(income_train.loc[:, 'Total Yearly Income [EUR]'])
+inc = np.subtract(income_train['Total Yearly Income [EUR]'], income_train['Yearly Income in addition to Salary (e.g. Rental Income)'])
+Y= np.sqrt(inc)
 
 model = lgb.LGBMRegressor()
 model.fit(X,Y)
