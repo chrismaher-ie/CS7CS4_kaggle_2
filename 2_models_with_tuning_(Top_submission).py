@@ -152,6 +152,22 @@ X_predictions_2 = X_predictions_2.drop("Instance",1)
 X_2 = X_2.drop("Instance",1)
 y_2 = y_2.drop("Instance",1)
 
+# In[ ]:
+
+#Parameter tuning using randomised search with cv=3
+param_test ={'n_iter' : np.arange(500,4000, 500) ,
+            'num_leaves' : np.arange(5,50, 5), 
+             'min_child_samples': np.arange(100,500, 50), 
+             'reg_alpha': [0, 1e-1, 1, 2, 5, 7, 10, 50, 100],
+             }
+
+
+grid_1 = RandomizedSearchCV(estimator=regr_1, param_distributions=param_test, 
+                            scoring='neg_mean_absolute_error', cv=3, refit=True,
+                            random_state=1,  verbose=True)
+
+grid_1.fit(X_train, y_train)
+grid_1.best_params_
 
 # In[ ]:
 
